@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Land Record Visualization</title>
+    <link rel="stylesheet" href="style.css">
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+</head>
+<body>
+    <div class="theme-toggle">
+        <button id="theme-switch" class="theme-switch" data-tooltip="Toggle Dark/Light Mode">
+            <svg class="sun-icon" viewBox="0 0 200 200">
+                <!-- Main sun circle -->
+                <circle cx="100" cy="100" r="40" fill="none" stroke="white" stroke-width="4"/>
+                <!-- Sun rays -->
+                <g stroke="white" stroke-width="4">
+                    <line x1="100" y1="40" x2="100" y2="10"/>
+                    <line x1="100" y1="160" x2="100" y2="190"/>
+                    <line x1="40" y1="100" x2="10" y2="100"/>
+                    <line x1="160" y1="100" x2="190" y2="100"/>
+                    <line x1="58" y1="58" x2="37" y2="37"/>
+                    <line x1="142" y1="58" x2="163" y2="37"/>
+                    <line x1="58" y1="142" x2="37" y2="163"/>
+                    <line x1="142" y1="142" x2="163" y2="163"/>
+                </g>
+            </svg>
+            <svg class="moon-icon" viewBox="0 0 24 24">
+                <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+            </svg>
+        </button>
+    </div>
+    
+    <div class="container" id="page1">
+        <h1>Land Record CSV Import</h1>
+        <div class="upload-container">
+            <input type="file" id="csvFile" accept=".csv">
+            <button id="importBtn">Import CSV</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="page2">
+        <img src="icon-explore.svg" alt="Explore Icon">
+        <div class="filters">
+            <h2>Data Filters</h2>
+            <div class="filters-wrapper">
+                <div class="active-filters">
+                    <h3>Active Filters</h3>
+                    <div id="active-filters-list"></div>
+                </div>
+                <div class="filter-controls">
+                    <div class="filter-add">
+                        <select id="filter-field">
+                            <option value="">Select Field</option>
+                        </select>
+                        <select id="filter-operator">
+                            <option value="equals">Equals</option>
+                            <option value="not-equals">Not Equals</option>
+                            <option value="contains">Contains</option>
+                            <option value="greater-than">Greater Than</option>
+                            <option value="less-than">Less Than</option>
+                        </select>
+                        <input type="text" id="filter-value" placeholder="Filter value">
+                        <button id="add-filter" class="btn-primary">Add Filter</button>
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button id="apply-filters" class="btn-success">Apply Filters</button>
+                    <button id="clear-filters" class="btn-danger">Clear All</button>
+                </div>
+            </div>
+        </div>
+        
+        <img src="icon-bargraph.svg" alt="Graph Icon">
+        
+        <div class="graph-controls">
+            <div class="axis-selectors">
+                <div class="axis-selector">
+                    <label for="x-axis">X-Axis</label>
+                    <select id="x-axis"></select>
+                </div>
+                <div class="axis-selector">
+                    <label for="y-axis">Y-Axis</label>
+                    <select id="y-axis"></select>
+                </div>
+            </div>
+            
+            <div class="graph-type-selector">
+                <div class="graph-type-buttons">
+                    <button class="graph-type-btn active" data-type="bar" data-tooltip="View data as bars">Bar Graph</button>
+                    <button class="graph-type-btn" data-type="line" data-tooltip="View trends over time">Line Graph</button>
+                    <button class="graph-type-btn" data-type="pie">Pie Chart</button>
+                    <button class="graph-type-btn" data-type="area">Area Graph</button>
+                </div>
+            </div>
+            
+            <div class="color-legend">
+                <span class="legend-label">Low</span>
+                <div class="color-scale"></div>
+                <span class="legend-label">High</span>
+            </div>
+        </div>
+
+        <div class="visualization">
+            <h2>Data Visualization</h2>
+            <canvas id="myChart"></canvas>
+            <div class="summary">
+                <p>Total Rakwa: <span id="totalRakwa">0</span></p>
+                <p>Number of Plots: <span id="plotCount">0</span></p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
