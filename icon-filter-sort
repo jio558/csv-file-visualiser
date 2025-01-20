@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40">
+  <!-- Filter Icon -->
+  <g transform="translate(10, 5)">
+    <!-- Gradient for Filter -->
+    <defs>
+      <linearGradient id="filterGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#4facfe"/>
+        <stop offset="100%" style="stop-color:#00f2fe"/>
+      </linearGradient>
+    </defs>
+    <path d="M0 0 L20 0 L12 12 L12 20 L8 22 L8 12 L0 0Z" 
+          fill="url(#filterGradient)" 
+          stroke="#4facfe" 
+          stroke-width="1.5"/>
+    <text x="25" y="16" 
+          font-family="Arial, sans-serif" 
+          font-size="14"
+          fill="#2C3E50"
+          font-weight="600">Filter</text>
+  </g>
+
+
+</svg>
