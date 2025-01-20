@@ -6,14 +6,12 @@ body {
 }
 
 .container {
-    max-width: 1000px;
-    margin: 20px auto;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
-    background: linear-gradient(to bottom right, #ffffff, #f8f9fa);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    border: none;
-    border-radius: 8px;
-    transition: opacity 0.3s ease-in-out;
+    display: grid;
+    gap: 20px;
+    min-height: 100vh;
 }
 
 .hidden {
@@ -47,19 +45,48 @@ body {
     cursor: pointer;
 }
 
-#importBtn {
-    padding: 10px 15px;
-    background-color: #007bff;
+/* Import Button Style Fix */
+.import-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    background: var(--button-primary, #2196f3);
     color: white;
     border: none;
     border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-
+    transition: all 0.2s ease;
+    margin-top: 15px;
+    box-shadow: 0 2px 4px rgba(33, 150, 243, 0.2);
 }
 
-#importBtn:hover {
-    background-color: #0056b3;
+.import-btn:hover:not(:disabled) {
+    background: var(--button-primary-hover, #1976d2);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+}
+
+.import-btn:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(33, 150, 243, 0.2);
+}
+
+.import-btn:disabled {
+    background: var(--button-disabled, #cccccc);
+    color: var(--text-disabled, #666666);
+    opacity: 0.7;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.import-btn svg {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    color: currentColor;
 }
 
 /* Page 2 Styles */
@@ -69,28 +96,35 @@ body {
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     padding: 20px;
     margin-bottom: 25px;
+    width: auto;
+    box-sizing: border-box;
+    margin-right: 20px;
 }
 
 .filters-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .filter-controls {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    width: 100%;
 }
 
 .filter-add {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .filter-add select,
 .filter-add input {
+    max-width: 100%;
+    box-sizing: border-box;
     padding: 8px 12px;
     border: 1px solid #dee2e6;
     border-radius: 6px;
@@ -99,20 +133,28 @@ body {
 }
 
 .active-filters {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
+    display: grid;
+    gap: 12px;
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 12px;
+    background: var(--card-bg);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .active-filter {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto;
     align-items: center;
-    padding: 8px 12px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    margin-bottom: 8px;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: var(--input-bg);
+    transition: transform 0.2s ease;
+}
+
+.active-filter:hover {
+    transform: translateX(4px);
 }
 
 .filter-actions {
@@ -174,37 +216,62 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Notification Styles */
-.notification {
+/* Notification System Styles */
+.notification-container {
     position: fixed;
     top: 20px;
     right: 20px;
-    padding: 15px 25px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.notification {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 300px;
+    padding: 15px 20px;
     border-radius: 8px;
     background: white;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transform: translateX(120%);
     transition: transform 0.3s ease;
-    z-index: 1000;
+    color: #333;
 }
 
 .notification.show {
     transform: translateX(0);
 }
 
+.notification-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
 .notification.success {
-    background: #28a745;
+    background: #4caf50;
     color: white;
 }
 
 .notification.error {
-    background: #dc3545;
+    background: #f44336;
     color: white;
 }
 
 .notification.info {
-    background: #17a2b8;
+    background: #2196f3;
     color: white;
+}
+
+.notification-message {
+    font-weight: 500;
 }
 
 /* Responsive Adjustments */
@@ -283,9 +350,9 @@ body {
 }
 
 .graph-type-btn.active {
-    background-color: var(--button-hover);
+    background-color: var(--button-hover, #007bff);
     color: white;
-    border-color: var(--button-hover);
+    border-color: var(--button-hover, #007bff);
 }
 
 /* Graph Type Buttons Theme Support */
@@ -324,7 +391,7 @@ body {
     height: 24px;
     border-radius: 12px;
     border: 1px solid var(--border-color);
-    background: linear-gradient(to right, #4BC0C0, #FF6384);
+    background: linear-gradient(to right, var(--low-color, #4BC0C0), var(--high-color, #FF6384));
 }
 
 .legend-label {
@@ -436,7 +503,16 @@ body {
 
 /* Graph Controls Styles */
 .graph-type-selector {
-    margin-bottom: 15px;
+    position: fixed;
+    top: 20px;
+    right: 80px;
+    z-index: 100;
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    background: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .graph-type-buttons {
@@ -560,7 +636,7 @@ body {
 
 /* Improved headings */
 h1, h2 {
-    color: #2c3e50;
+    color: #2196f3;
     position: relative;
     padding-bottom: 10px;
 }
@@ -895,3 +971,574 @@ body {
     background-color: #007bff;
     color: #ffffff;
 }
+
+/* Import Section Styles */
+.import-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 40px;
+    background: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.import-section h1 {
+    font-size: clamp(24px, 4vw, 32px);
+    margin-bottom: 30px;
+    color: var(--text-primary);
+}
+
+.upload-container {
+    width: 100%;
+    display: grid;
+    gap: 24px;
+}
+
+.file-input-wrapper {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.file-input-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--input-bg);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover Effect */
+.file-input-label:hover {
+    border-color: var(--button-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Active Drag Effect */
+.file-input-label.drag-active {
+    border-color: var(--button-hover);
+    background-color: rgba(var(--button-hover-rgb), 0.1);
+    transform: scale(1.02);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Upload Icon Animation */
+.upload-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 15px;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+.file-input-label:hover .upload-icon,
+.file-input-label.drag-active .upload-icon {
+    color: var(--button-hover);
+    transform: translateY(-5px);
+}
+
+/* Ripple Effect on Click */
+.file-input-label::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(var(--button-hover-rgb), 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: width 0.6s ease-out, height 0.6s ease-out, opacity 0.6s ease-out;
+}
+
+.file-input-label:active::after {
+    width: 400px;
+    height: 400px;
+    opacity: 1;
+}
+
+/* Drag Overlay */
+.file-input-wrapper::before {
+    content: 'Drop file here';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(var(--button-hover-rgb), 0.9);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    font-weight: 500;
+    border-radius: 8px;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.file-input-label.drag-active + .file-input-wrapper::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Text Styles */
+.upload-text {
+    font-size: 1.1em;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+}
+
+.upload-subtext {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.file-input-label:hover .upload-text,
+.file-input-label.drag-active .upload-text {
+    color: var(--button-hover);
+}
+
+/* Animation for drag enter/leave */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+.file-input-label.drag-active {
+    animation: pulse 1.5s ease infinite;
+}
+
+/* Add these variables to your root */
+:root {
+    --button-hover-rgb: 33, 150, 243; /* Blue color in RGB format */
+}
+
+/* Filter Section Improvements */
+.filters {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.filter-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.filter-add {
+    display: grid;
+    gap: 12px;
+}
+
+.filter-add select,
+.filter-add input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--input-bg);
+    color: var(--text-primary);
+}
+
+.filter-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Active Filters Improvements */
+.active-filters {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.active-filter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+    .import-section {
+        padding: 30px 15px;
+    }
+    
+    .file-input-label {
+        padding: 20px;
+    }
+    
+    .upload-icon {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .filter-controls {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .import-section {
+        padding: 20px 10px;
+    }
+    
+    .upload-text {
+        font-size: 16px;
+    }
+    
+    .filter-add {
+        gap: 8px;
+    }
+}
+
+/* Smooth Scroll Behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Filter Section Visibility */
+.filter-section {
+    scroll-margin-top: 20px; /* Adds margin for smooth scroll */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Improve section spacing */
+.filter-section {
+    margin-top: 40px;
+    padding: 30px;
+    border-radius: 12px;
+    background: var(--card-bg);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Add visual indicator */
+.filter-section::before {
+    content: '↓ Data Filters';
+    display: block;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+/* Ensure proper spacing for scrolling */
+#page2 {
+    padding-top: 20px;
+}
+
+/* Add these styles for better filter interaction */
+.filter-add select:focus,
+.filter-add input:focus {
+    outline: none;
+    border-color: var(--button-hover);
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+.filter-section {
+    position: sticky;
+    top: 20px;
+    z-index: 100;
+    background: var(--card-bg);
+}
+
+/* Two-Column Layout for Filters and Visualization */
+.data-section {
+    display: grid;
+    grid-template-columns: minmax(300px, 1fr) minmax(500px, 2fr);
+    gap: 15px;
+    align-items: start;
+}
+
+/* Make Filter Section Sticky */
+.filter-section {
+    position: sticky;
+    top: 20px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    padding: 20px;
+}
+
+/* Improved Graph Controls Layout */
+.graph-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 1024px) {
+    .data-section {
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-section {
+        position: relative;
+        max-height: none;
+    }
+}
+
+.visualization-container {
+    position: relative;
+    width: 100%;
+    resize: vertical;
+    overflow: auto;
+    min-height: 300px;
+    max-height: 800px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.visualization-container::after {
+    content: '↕';
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 16px;
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+.visualization canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.graph-type-selector {
+    position: fixed;
+    top: 20px;
+    right: 80px;
+    z-index: 100;
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    background: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .graph-type-selector {
+        position: static;
+        margin-bottom: 15px;
+        justify-content: center;
+    }
+    
+    .visualization-container {
+        min-height: 250px;
+    }
+}
+
+/* Theme Switcher Spacing */
+.theme-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 101;
+}
+
+/* Light Theme Color Updates */
+:root {
+    /* Light Theme Base Colors */
+    --background-light: #e8f0fe;  /* Medium lighter blueish */
+    --card-bg-light: #f5f9ff;    /* Low light blueish */
+    --input-bg-light: #ffffff;    /* Pure white for inputs */
+    
+    /* Light Theme Text Colors */
+    --text-primary-light: #1a365d;   /* Darker blue for primary text */
+    --text-secondary-light: #4a5568; /* Medium gray-blue for secondary text */
+    --text-muted-light: #718096;     /* Light gray-blue for muted text */
+    
+    /* Light Theme Border & Interactive */
+    --border-color-light: #ccd9e6;    /* Light blue-gray border */
+    --hover-bg-light: #f0f7ff;        /* Very light blue hover */
+    --active-bg-light: #e1edff;       /* Slightly darker active state */
+    
+    /* Light Theme Button Colors */
+    --button-primary-light: #3b82f6;   /* Bright blue for buttons */
+    --button-hover-light: #2563eb;     /* Darker blue for hover */
+    
+    /* Dark Theme Colors */
+    --background-dark: #1a1f2e;        /* Dark blue-gray background */
+    --card-bg-dark: #252b3d;           /* Slightly lighter card background */
+    --input-bg-dark: #2d3548;          /* Input background */
+    --text-primary-dark: #e2e8f0;      /* Light gray-blue for primary text */
+    --text-secondary-dark: #cbd5e1;    /* Lighter gray for secondary text */
+    --border-color-dark: #3d4661;      /* Border color for dark theme */
+    --button-primary-dark: #60a5fa;    /* Bright blue for dark theme */
+    --button-hover-dark: #3b82f6;      /* Hover state for dark theme */
+}
+
+/* Light Theme Application */
+:root[data-theme="light"],
+:root:not([data-theme="dark"]) {
+    --background: var(--background-light);
+    --card-bg: var(--card-bg-light);
+    --input-bg: var(--input-bg-light);
+    --text-primary: var(--text-primary-light);
+    --text-secondary: var(--text-secondary-light);
+    --text-muted: var(--text-muted-light);
+    --border-color: var(--border-color-light);
+    --button-primary: var(--button-primary-light);
+    --button-hover: var(--button-hover-light);
+    --hover-bg: var(--hover-bg-light);
+    --active-bg: var(--active-bg-light);
+}
+
+/* Dark Theme Application */
+:root[data-theme="dark"] {
+    --background: var(--background-dark);
+    --card-bg: var(--card-bg-dark);
+    --input-bg: var(--input-bg-dark);
+    --text-primary: var(--text-primary-dark);
+    --text-secondary: var(--text-secondary-dark);
+    --border-color: var(--border-color-dark);
+    --button-primary: var(--button-primary-dark);
+    --button-hover: var(--button-hover-dark);
+}
+
+/* Filter Section Title - Both Themes */
+.filter-section::before {
+    color: var(--text-primary);
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Add Filter Button - Both Themes */
+#add-filter {
+    background: var(--button-primary);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#add-filter:hover {
+    background: var(--button-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Text Contrast Improvements */
+.filter-add label {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.filter-add select,
+.filter-add input {
+    color: var(--text-primary);
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+}
+
+.active-filter span {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Filter Section Background */
+.filter-section {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Active Filters */
+.active-filters {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+}
+
+.active-filter {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+}
+
+/* Hover States */
+.active-filter:hover {
+    background: var(--hover-bg);
+    border-color: var(--button-primary);
+}
+
+/* Input Focus States */
+.filter-add select:focus,
+.filter-add input:focus {
+    border-color: var(--button-primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Placeholder Text */
+.filter-add select::placeholder,
+.filter-add input::placeholder {
+    color: var(--text-muted);
+}
+
+/* Dark Theme Specific Adjustments */
+:root[data-theme="dark"] .filter-section::before {
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+:root[data-theme="dark"] #add-filter {
+    background: var(--button-primary-dark);
+}
+
+:root[data-theme="dark"] #add-filter:hover {
+    background: var(--button-hover-dark);
+}
+
+/* Dark Theme SVG Switching */
+[data-theme="dark"] .filters img {
+    content: url("icon-filter-sort-dark.svg");
+}
+
+[data-theme="dark"] .graph-controls img {
+    content: url("icon-graph-mod-dark.svg");
+}
+
