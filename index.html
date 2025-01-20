@@ -10,9 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 </head>
 <body>
-    <div class="theme-toggle">
+         <div class="theme-toggle">
         <button id="theme-switch" class="theme-switch" data-tooltip="Toggle Dark/Light Mode">
             <svg class="sun-icon" viewBox="0 0 200 200">
                 <!-- Main sun circle -->
@@ -36,16 +37,43 @@
     </div>
     
     <div class="container" id="page1">
-        <h1>Land Record CSV Import</h1>
-        <div class="upload-container">
-            <input type="file" id="csvFile" accept=".csv">
-            <button id="importBtn">Import CSV</button>
+        <div class="import-section">
+            <h1>Land Record Visualization</h1>
+            <div class="upload-container">
+                <div class="file-input-wrapper">
+                    <label class="file-input-label">
+                        <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        <span class="upload-text">Drop your CSV file here</span>
+                        <span class="upload-subtext">or click to browse</span>
+                    </label>
+                </div>
+                <button id="importBtn" class="import-btn" disabled>
+                    <svg class="import-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Import CSV
+                </button>
+            </div>
         </div>
     </div>
 
     <div class="container hidden" id="page2">
-        <img src="icon-explore.svg" alt="Explore Icon">
+          
         <div class="filters">
+           
+                <img  src="icon-filter-sort.svg" alt="Explore Icon">
+         
+            
+        
+            
+
+ 
             <h2>Data Filters</h2>
             <div class="filters-wrapper">
                 <div class="active-filters">
@@ -75,9 +103,11 @@
             </div>
         </div>
         
-        <img src="icon-bargraph.svg" alt="Graph Icon">
         
+      
         <div class="graph-controls">
+            <img  src="icon-graph-mod.svg" alt="Graph Icon">
+           
             <div class="axis-selectors">
                 <div class="axis-selector">
                     <label for="x-axis">X-Axis</label>
